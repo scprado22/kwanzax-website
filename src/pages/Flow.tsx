@@ -40,15 +40,15 @@ export default function Flow() {
             </motion.div>
             <motion.h1
               variants={fadeUp}
-              className="text-5xl md:text-6xl font-bold text-gray-900 mt-4 leading-tight tracking-tight"
+              className="text-5xl md:text-6xl font-bold text-gray-900 mt-4 leading-tight tracking-tight whitespace-pre-line"
             >
-              Metodologia clara.<br />Resultados garantidos.
+              {t.flow.pageHeading}
             </motion.h1>
             <motion.p
               variants={fadeUp}
               className="text-xl text-gray-500 mt-6 leading-relaxed"
             >
-              Cada projeto segue um processo estruturado e transparente para garantir a entrega dentro do prazo, orçamento e qualidade esperados.
+              {t.flow.pageSubtitle}
             </motion.p>
           </motion.div>
         </div>
@@ -58,12 +58,7 @@ export default function Flow() {
       <section className="border-y border-gray-100 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { val: "8–12", unit: "semanas", label: "tempo médio de entrega" },
-              { val: "2", unit: "semanas", label: "por sprint de desenvolvimento" },
-              { val: "100%", unit: "", label: "transparência e comunicação" },
-              { val: "30", unit: "dias", label: "de suporte pós-lançamento" },
-            ].map(({ val, unit, label }) => (
+            {t.flow.metrics.map(({ val, unit, label }) => (
               <motion.div
                 key={label}
                 initial={{ opacity: 0, y: 16 }}
@@ -113,7 +108,7 @@ export default function Flow() {
                     <div className="flex-1 pt-3 pb-8">
                       <div className="flex flex-wrap items-center gap-3 mb-3">
                         <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
-                          Fase 0{idx + 1}
+                          {t.flow.phaseLabel} 0{idx + 1}
                         </span>
                         <span className={`text-xs font-semibold ${color.text} ${color.light} px-3 py-1 rounded-full`}>
                           {step.duration}
@@ -143,18 +138,9 @@ export default function Flow() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-10">O que pode esperar</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-10">{t.flow.whatToExpectHeading}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                "Equipa dedicada desde o primeiro dia",
-                "Demos semanais com feedback contínuo",
-                "Relatórios de progresso regulares",
-                "Documentação técnica completa",
-                "Formação das equipas do cliente",
-                "Suporte pós-lançamento de 30 dias",
-                "Código-fonte entregue ao cliente",
-                "SLA e métricas acordadas no contrato",
-              ].map((item) => (
+              {t.flow.whatToExpect.map((item) => (
                 <div key={item} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-gray-100">
                   <div className="h-2 w-2 rounded-full bg-[#35A2F5] flex-shrink-0" />
                   <span className="text-sm text-gray-700 font-medium">{item}</span>
@@ -175,16 +161,16 @@ export default function Flow() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Pronto para começar?
+              {t.flow.ctaHeading}
             </h2>
             <p className="text-gray-500 mb-10 max-w-xl mx-auto">
-              Agende uma chamada de discovery gratuita e receba uma proposta detalhada em 48h.
+              {t.flow.ctaSubtitle}
             </p>
             <Link
               to="/contactos"
               className="inline-flex items-center gap-2 bg-[#03409C] hover:bg-[#02357f] text-white font-bold px-8 py-4 rounded-full transition-colors duration-200"
             >
-              Iniciar projeto <ArrowRight size={18} />
+              {t.flow.ctaButton} <ArrowRight size={18} />
             </Link>
           </motion.div>
         </div>

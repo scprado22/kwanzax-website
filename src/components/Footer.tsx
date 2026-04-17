@@ -132,7 +132,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-1">
             <div className="h-2 w-2 rounded-full bg-[#35A2F5] animate-pulse" />
-            <span className="text-xs text-gray-600">Dubai · Luanda · Lisboa</span>
+            <span className="text-xs text-gray-600">{t.brand.offices}</span>
           </div>
         </div>
       </div>

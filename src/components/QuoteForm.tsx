@@ -3,8 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader as Loader2, CircleCheck as CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export function QuoteForm() {
+  const { t } = useLanguage();
+  const f = t.forms.quoteForm;
+
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -21,7 +25,7 @@ export function QuoteForm() {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Por favor, preenche os campos obrigatórios");
+      toast.error(f.validationError);
       return;
     }
 
@@ -50,11 +54,11 @@ export function QuoteForm() {
       );
 
       if (!response.ok) {
-        throw new Error("Erro ao enviar mensagem");
+        throw new Error("Error sending message");
       }
 
       setSubmitted(true);
-      toast.success("Mensagem enviada com sucesso!");
+      toast.success(f.successToast);
 
       setTimeout(() => {
         setFormData({
@@ -68,7 +72,7 @@ export function QuoteForm() {
         setSubmitted(false);
       }, 2000);
     } catch (error) {
-      toast.error("Erro ao enviar. Por favor, tenta novamente.");
+      toast.error(f.errorToast);
       console.error("Error:", error);
     } finally {
       setLoading(false);
@@ -81,7 +85,7 @@ export function QuoteForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Nome</label>
+              <label className="block text-sm font-medium mb-2">{f.name}</label>
               <input
                 type="text"
                 value={formData.name}
@@ -91,7 +95,7 @@ export function QuoteForm() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
+              <label className="block text-sm font-medium mb-2">{f.email}</label>
               <input
                 type="email"
                 value={formData.email}
@@ -103,7 +107,7 @@ export function QuoteForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Mensagem</label>
+            <label className="block text-sm font-medium mb-2">{f.message}</label>
             <textarea
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -117,7 +121,7 @@ export function QuoteForm() {
           {submitted ? (
             <div className="w-full py-3 px-4 bg-green-50 border-2 border-green-200 rounded-lg flex items-center gap-2 text-green-700 font-medium">
               <CheckCircle2 className="h-5 w-5" />
-              Mensagem enviada com sucesso!
+              {f.successMessage}
             </div>
           ) : (
             <Button
@@ -128,10 +132,10 @@ export function QuoteForm() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Enviando...
+                  {f.sending}
                 </>
               ) : (
-                "Enviar Pedido"
+                f.send
               )}
             </Button>
           )}

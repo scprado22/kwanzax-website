@@ -45,15 +45,15 @@ export default function Services() {
             </motion.div>
             <motion.h1
               variants={fadeUp}
-              className="text-5xl md:text-6xl font-bold text-gray-900 mt-4 leading-tight tracking-tight"
+              className="text-5xl md:text-6xl font-bold text-gray-900 mt-4 leading-tight tracking-tight whitespace-pre-line"
             >
-              Soluções end-to-end<br />para a sua transformação
+              {t.services.pageHeading}
             </motion.h1>
             <motion.p
               variants={fadeUp}
               className="text-xl text-gray-500 mt-6 max-w-2xl leading-relaxed"
             >
-              Quatro áreas de especialização para cobrir todo o ciclo de transformação digital — de strategy a deploy.
+              {t.services.pageSubtitle}
             </motion.p>
           </motion.div>
         </div>
@@ -115,7 +115,7 @@ export default function Services() {
                       to="/contactos"
                       className="inline-flex items-center gap-2 bg-[#03409C] hover:bg-[#02357f] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-200 text-sm w-fit"
                     >
-                      Falar sobre este serviço <ArrowRight size={16} />
+                      {t.services.talkAboutService} <ArrowRight size={16} />
                     </Link>
                   </div>
                 </div>
@@ -138,16 +138,16 @@ export default function Services() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Não sabe por onde começar?
+              {t.services.ctaHeading}
             </h2>
             <p className="text-blue-100 mb-10 max-w-xl mx-auto">
-              Fale connosco e receba um diagnóstico inicial gratuito com recomendações personalizadas.
+              {t.services.ctaSubtitle}
             </p>
             <Link
               to="/contactos"
               className="inline-flex items-center gap-2 bg-white text-[#03409C] hover:bg-gray-50 font-bold px-8 py-4 rounded-full transition-colors duration-200"
             >
-              Entrar em contacto <ArrowRight size={18} />
+              {t.services.ctaButton} <ArrowRight size={18} />
             </Link>
           </motion.div>
         </div>

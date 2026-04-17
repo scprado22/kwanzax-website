@@ -4,8 +4,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Phone, MessageSquare, MapPin } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export function ContactFormEnhanced() {
+  const { t } = useLanguage();
+  const f = t.forms.contactForm;
+
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -13,23 +17,20 @@ export function ContactFormEnhanced() {
     subject: "",
     message: "",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validação básica
+
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast.error("Por favor preencha todos os campos obrigatórios");
+      toast.error(f.validationError);
       return;
     }
 
     setIsSubmitting(true);
-    console.log("Contact form submitted:", formData);
 
     try {
-      // IMPORTANTE: Substitui pelo teu URL do Supabase
       const response = await fetch(
         "https://gqfuwomeoucompeirwkd.supabase.co/functions/v1/send-quote-email",
         {
@@ -44,16 +45,13 @@ export function ContactFormEnhanced() {
       if (!response.ok) {
         const errorData = await response.text();
         console.error("Error response:", errorData);
-        throw new Error(`Erro ao enviar: ${response.status}`);
+        throw new Error(`Error sending: ${response.status}`);
       }
 
-      const result = await response.json();
-      console.log("Success:", result);
+      await response.json();
 
-      // Mostra mensagem de sucesso
-      toast.success("Mensagem enviada com sucesso! Entraremos em contacto em breve.");
+      toast.success(f.successToast);
 
-      // Limpa o formulário após 2 segundos
       setTimeout(() => {
         setFormData({
           name: "",
@@ -66,7 +64,7 @@ export function ContactFormEnhanced() {
 
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Erro ao enviar mensagem. Por favor tente novamente.");
+      toast.error(f.errorToast);
     } finally {
       setIsSubmitting(false);
     }
@@ -78,11 +76,11 @@ export function ContactFormEnhanced() {
       <div className="grid md:grid-cols-2 gap-8">
         <Card>
           <CardContent className="p-8">
-            <h2 className="text-2xl font-bold mb-6">Envie-nos uma mensagem</h2>
+            <h2 className="text-2xl font-bold mb-6">{f.heading}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Nome Completo *
+                  {f.fullName}
                 </label>
                 <input
                   id="name"
@@ -92,7 +90,7 @@ export function ContactFormEnhanced() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2 bg-white border-2 border-blue-200 rounded-lg text-blue-900 placeholder-blue-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
                   required
-                  placeholder="João Silva"
+                  placeholder={f.namePlaceholder}
                   disabled={isSubmitting}
                 />
               </div>
@@ -109,14 +107,14 @@ export function ContactFormEnhanced() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-2 bg-white border-2 border-blue-200 rounded-lg text-blue-900 placeholder-blue-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
                   required
-                  placeholder="joao@exemplo.com"
+                  placeholder={f.emailPlaceholder}
                   disabled={isSubmitting}
                 />
               </div>
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                  Telemóvel
+                  {f.phone}
                 </label>
                 <input
                   id="phone"
@@ -125,14 +123,14 @@ export function ContactFormEnhanced() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-2 bg-white border-2 border-blue-200 rounded-lg text-blue-900 placeholder-blue-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
-                  placeholder="+351 900 000 000"
+                  placeholder={f.phonePlaceholder}
                   disabled={isSubmitting}
                 />
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                  Assunto *
+                  {f.subject}
                 </label>
                 <select
                   id="subject"
@@ -143,17 +141,17 @@ export function ContactFormEnhanced() {
                   required
                   disabled={isSubmitting}
                 >
-                  <option value="">Selecione um assunto</option>
-                  <option value="projeto">Novo Projeto</option>
-                  <option value="consultoria">Consultoria</option>
-                  <option value="suporte">Suporte</option>
-                  <option value="outro">Outro</option>
+                  <option value="">{f.subjectPlaceholder}</option>
+                  <option value="projeto">{f.subjectOptions.newProject}</option>
+                  <option value="consultoria">{f.subjectOptions.consulting}</option>
+                  <option value="suporte">{f.subjectOptions.support}</option>
+                  <option value="outro">{f.subjectOptions.other}</option>
                 </select>
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Mensagem *
+                  {f.message}
                 </label>
                 <textarea
                   id="message"
@@ -163,20 +161,19 @@ export function ContactFormEnhanced() {
                   className="w-full px-4 py-2 bg-white border-2 border-blue-200 rounded-lg text-blue-900 placeholder-blue-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"
                   rows={4}
                   required
-                  placeholder="Conte-nos sobre o seu projeto ou necessidade..."
+                  placeholder={f.messagePlaceholder}
                   disabled={isSubmitting}
                 />
               </div>
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
+                {isSubmitting ? f.sending : f.send}
               </Button>
             </form>
           </CardContent>
         </Card>
 
         <div className="space-y-6">
-          {/* ... resto do código dos cards permanece igual ... */}
           <Card className="bg-gradient-to-br from-blue-50 to-white">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
@@ -186,7 +183,7 @@ export function ContactFormEnhanced() {
                 <div>
                   <h3 className="font-semibold mb-1">Email</h3>
                   <p className="text-blue-600">info@kwanzax.com</p>
-                  <p className="text-sm text-gray-600 mt-1">Resposta em 24-48h</p>
+                  <p className="text-sm text-gray-600 mt-1">{f.responseTime}</p>
                 </div>
               </div>
             </CardContent>
@@ -199,7 +196,7 @@ export function ContactFormEnhanced() {
                   <Phone className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Telefone</h3>
+                  <h3 className="font-semibold mb-1">{t.contact.phone}</h3>
                   <a href="tel:+971529658882" className="text-blue-600 hover:text-blue-700 transition-colors">+971 52 965 8882</a>
                   <p className="text-sm text-gray-600">Dubai, UAE</p>
                   <a href="tel:+351938032161" className="text-blue-600 hover:text-blue-700 transition-colors mt-2 block">+351 938 032 161</a>
@@ -218,7 +215,7 @@ export function ContactFormEnhanced() {
                 <div>
                   <h3 className="font-semibold mb-1">WhatsApp</h3>
                   <a href="https://wa.me/971529658882" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 transition-colors">+971 52 965 8882</a>
-                  <p className="text-sm text-gray-600">Chat direto</p>
+                  <p className="text-sm text-gray-600">{f.directChat}</p>
                 </div>
               </div>
             </CardContent>
@@ -231,7 +228,7 @@ export function ContactFormEnhanced() {
                   <MapPin className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Escritórios</h3>
+                  <h3 className="font-semibold mb-1">{t.contact.offices}</h3>
                   <p className="text-sm text-gray-700 mb-2">Dubai, UAE</p>
                   <p className="text-sm text-gray-700 mb-2">Lisboa, Portugal</p>
                   <p className="text-sm text-gray-700">Luanda, Angola</p>

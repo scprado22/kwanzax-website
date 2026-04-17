@@ -18,7 +18,7 @@ const stagger = {
 };
 
 export default function Contact() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const contactCards = [
     {
@@ -26,16 +26,16 @@ export default function Contact() {
       label: "Email",
       value: EMAIL,
       action: `mailto:${EMAIL}`,
-      actionLabel: language === "pt" ? "Enviar email" : "Send email",
+      actionLabel: t.contact.sendEmail,
       color: "bg-blue-50",
       iconColor: "text-[#03409C]",
     },
     {
       icon: Phone,
-      label: language === "pt" ? "Telefone" : "Phone",
+      label: t.contact.phone,
       value: PHONE,
       action: `tel:${PHONE}`,
-      actionLabel: language === "pt" ? "Ligar agora" : "Call now",
+      actionLabel: t.contact.callNow,
       color: "bg-sky-50",
       iconColor: "text-sky-600",
     },
@@ -44,13 +44,13 @@ export default function Contact() {
       label: "WhatsApp",
       value: PHONE,
       action: `https://wa.me/${PHONE.replace(/\D/g, "")}`,
-      actionLabel: language === "pt" ? "Abrir WhatsApp" : "Open WhatsApp",
+      actionLabel: t.contact.openWhatsApp,
       color: "bg-green-50",
       iconColor: "text-green-600",
     },
     {
       icon: MapPin,
-      label: language === "pt" ? "Escritórios" : "Offices",
+      label: t.contact.offices,
       value: t.brand.offices,
       action: undefined,
       actionLabel: undefined,
@@ -58,12 +58,6 @@ export default function Contact() {
       iconColor: "text-[#35A2F5]",
     },
   ];
-
-  const bookingHeading = language === "pt" ? "Marcar chamada" : "Book a call";
-  const bookingText = language === "pt"
-    ? "Agende uma breve chamada para falarmos sobre o seu projecto."
-    : "Schedule a short call to discuss your project.";
-  const bookingCta = language === "pt" ? "Marcar no Calendly" : "Book on Calendly";
 
   return (
     <div className="bg-white">
@@ -150,8 +144,8 @@ export default function Contact() {
                 <CalendarDays size={20} className="text-[#03409C]" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-gray-900">{bookingHeading}</h3>
-                <p className="text-sm text-gray-500 mt-1 max-w-sm">{bookingText}</p>
+                <h3 className="text-base font-bold text-gray-900">{t.contact.bookingHeading}</h3>
+                <p className="text-sm text-gray-500 mt-1 max-w-sm">{t.contact.bookingText}</p>
               </div>
             </div>
             <a
@@ -160,7 +154,7 @@ export default function Contact() {
               rel="noreferrer"
               className="flex-shrink-0 inline-flex items-center gap-2 bg-[#03409C] hover:bg-[#02357f] text-white font-semibold px-6 py-3 rounded-full transition-colors duration-200 text-sm whitespace-nowrap"
             >
-              {bookingCta} <ArrowRight size={15} />
+              {t.contact.bookingCta} <ArrowRight size={15} />
             </a>
           </motion.div>
         </div>
@@ -172,17 +166,15 @@ export default function Contact() {
           <div className="flex items-center gap-4">
             <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
             <p className="text-gray-700 font-medium text-sm">
-              {language === "pt"
-                ? <>Respondemos a todos os pedidos em menos de <span className="text-[#03409C] font-bold">24 horas úteis</span>.</>
-                : <>We respond to all requests within <span className="text-[#03409C] font-bold">24 business hours</span>.</>
-              }
+              {t.contact.responseTime}{" "}
+              <span className="text-[#03409C] font-bold">{t.contact.responseTimeHighlight}</span>.
             </p>
           </div>
           <Link
             to="/servicos"
             className="inline-flex items-center gap-2 text-sm font-semibold text-[#03409C] hover:gap-3 transition-all flex-shrink-0"
           >
-            {language === "pt" ? "Ver os nossos serviços" : "View our services"} <ArrowRight size={16} />
+            {t.contact.viewServices} <ArrowRight size={16} />
           </Link>
         </div>
       </section>
@@ -201,13 +193,10 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
-              {language === "pt" ? "Prefere uma conversa directa?" : "Prefer a direct conversation?"}
+              {t.contact.directConvoHeading}
             </h2>
             <p className="text-blue-100 mb-10 max-w-xl mx-auto">
-              {language === "pt"
-                ? "Envie-nos uma mensagem via WhatsApp ou email e entraremos em contacto em breve."
-                : "Send us a message via WhatsApp or email and we'll be in touch shortly."
-              }
+              {t.contact.directConvoText}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <a

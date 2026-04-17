@@ -24,6 +24,14 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
 };
 
+const trustIcons = [Globe, TrendingUp, ShieldCheck, CheckCircle2];
+
+const portfolioGradients = [
+  "from-[#03409C] to-[#35A2F5]",
+  "from-cyan-600 to-sky-400",
+  "from-blue-700 to-[#35A2F5]",
+];
+
 export default function Home() {
   const { t } = useLanguage();
 
@@ -56,13 +64,6 @@ export default function Home() {
       color: "bg-blue-50",
       iconColor: "text-[#35A2F5]",
     },
-  ];
-
-  const trustPoints = [
-    { icon: Globe, label: "Dubai · Luanda · Lisboa" },
-    { icon: TrendingUp, label: "50+ projetos entregues" },
-    { icon: ShieldCheck, label: "Entrega garantida" },
-    { icon: CheckCircle2, label: "15+ sectores" },
   ];
 
   return (
@@ -110,12 +111,15 @@ export default function Home() {
               variants={fadeUp}
               className="flex flex-wrap gap-6 mt-12 pt-10 border-t border-gray-100"
             >
-              {trustPoints.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 text-sm text-gray-500">
-                  <Icon size={16} className="text-[#35A2F5] flex-shrink-0" />
-                  {label}
-                </div>
-              ))}
+              {t.home.trustPoints.map((label, idx) => {
+                const Icon = trustIcons[idx];
+                return (
+                  <div key={label} className="flex items-center gap-2 text-sm text-gray-500">
+                    <Icon size={16} className="text-[#35A2F5] flex-shrink-0" />
+                    {label}
+                  </div>
+                );
+              })}
             </motion.div>
           </motion.div>
 
@@ -146,8 +150,8 @@ export default function Home() {
               <span className="text-xs font-semibold text-[#35A2F5] uppercase tracking-widest">
                 {t.services.title}
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-3 leading-tight">
-                Quatro capacidades.<br />Um parceiro.
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-3 leading-tight whitespace-pre-line">
+                {t.home.servicesHeading}
               </h2>
             </motion.div>
 
@@ -170,7 +174,7 @@ export default function Home() {
                     to="/servicos"
                     className="inline-flex items-center gap-1 mt-5 text-sm font-semibold text-[#03409C] opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    Ver mais <ArrowRight size={14} />
+                    {t.home.servicesViewMore} <ArrowRight size={14} />
                   </Link>
                 </motion.div>
               ))}
@@ -181,7 +185,7 @@ export default function Home() {
                 to="/servicos"
                 className="inline-flex items-center gap-2 border border-gray-200 hover:border-[#03409C] bg-white text-gray-700 hover:text-[#03409C] font-semibold px-7 py-3 rounded-full transition-colors duration-200 text-sm"
               >
-                Ver todos os serviços <ArrowRight size={16} />
+                {t.home.servicesViewAll} <ArrowRight size={16} />
               </Link>
             </motion.div>
           </motion.div>
@@ -202,15 +206,15 @@ export default function Home() {
                 <span className="text-xs font-semibold text-[#35A2F5] uppercase tracking-widest">
                   {t.flow.title}
                 </span>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-3 leading-tight">
-                  Processo claro.<br />Entrega garantida.
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-3 leading-tight whitespace-pre-line">
+                  {t.home.flowHeading}
                 </h2>
               </div>
               <Link
                 to="/fluxo"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[#03409C] hover:gap-3 transition-all"
               >
-                Ver processo completo <ArrowRight size={16} />
+                {t.home.flowViewAll} <ArrowRight size={16} />
               </Link>
             </motion.div>
 
@@ -256,22 +260,18 @@ export default function Home() {
                 to="/portfolio"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[#03409C] hover:gap-3 transition-all"
               >
-                Ver portfólio completo <ArrowRight size={16} />
+                {t.home.portfolioViewAll} <ArrowRight size={16} />
               </Link>
             </motion.div>
 
             <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { title: "AJS Transportes e Logística", category: "Transformação Digital", gradient: "from-[#03409C] to-[#35A2F5]", result: "Zero a presença digital em 2 semanas" },
-                { title: "ERP Retalho Multi-País", category: "Software Empresarial", gradient: "from-cyan-600 to-sky-400", result: "45 lojas em visibilidade unificada" },
-                { title: "FinTech Pagamentos", category: "Tecnologia Financeira", gradient: "from-blue-700 to-[#35A2F5]", result: "$50M+ volume de transações" },
-              ].map((p) => (
+              {t.home.portfolioPreview.map((p, idx) => (
                 <motion.div
                   key={p.title}
                   variants={fadeUp}
                   className="group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl transition-all duration-300"
                 >
-                  <div className={`h-48 bg-gradient-to-br ${p.gradient} relative`}>
+                  <div className={`h-48 bg-gradient-to-br ${portfolioGradients[idx]} relative`}>
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
                     <span className="absolute top-4 left-4 text-xs font-semibold text-white/90 bg-white/10 border border-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
                       {p.category}
@@ -284,7 +284,7 @@ export default function Home() {
                       to="/portfolio"
                       className="inline-flex items-center gap-1 mt-4 text-sm text-gray-500 hover:text-[#03409C] transition-colors font-medium"
                     >
-                      Ver caso <ArrowRight size={14} />
+                      {t.home.portfolioItemViewCase} <ArrowRight size={14} />
                     </Link>
                   </div>
                 </motion.div>
@@ -307,11 +307,11 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold text-white leading-tight mb-7">
-              Pronto para transformar<br />o seu negócio?
+            <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold text-white leading-tight mb-7 whitespace-pre-line">
+              {t.home.ctaHeading}
             </h2>
             <p className="text-lg text-blue-100 mb-10 max-w-2xl mx-auto">
-              Fale connosco e em 48h terá uma proposta personalizada com roadmap e business case.
+              {t.home.ctaSubtitle}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link

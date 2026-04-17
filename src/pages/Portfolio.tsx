@@ -13,50 +13,16 @@ const stagger = {
   show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
 };
 
-const cases = [
-  {
-    slug: "ajs-case-study",
-    title: "AJS Transportes e Logística",
-    category: "Transformação Digital",
-    description: "Empresa de transportes estabelecida mas completamente invisível digitalmente. De zero presença online para plataforma corporativa profissional em apenas 2 semanas.",
-    results: ["Visibilidade digital criada do zero", "Credibilidade profissional estabelecida", "Portal 24/7 para clientes e parceiros", "Posicionamento competitivo no mercado"],
-    gradient: "from-[#03409C] to-[#35A2F5]",
-    tags: ["Desenvolvimento Web", "Design UI/UX", "Estratégia Digital", "SEO"],
-    year: "Dezembro 2025",
-    duration: "2 semanas",
-    url: "https://ajstl.com",
-  },
-  {
-    slug: "retail-erp",
-    title: "ERP de Retalho Multi-País",
-    category: "Software Empresarial",
-    description: "Sistema ERP integrado a gerir 45 lojas em 6 países africanos.",
-    results: ["Fonte única de verdade", "45+ lojas em visibilidade", "Inventário em tempo real", "Analytics centralizado"],
-    gradient: "from-cyan-700 to-sky-500",
-    tags: ["Angular", "C#", "SQL Server", "Azure"],
-    year: "2024",
-  },
-  {
-    slug: "fintech-platform",
-    title: "Plataforma de Pagamentos FinTech",
-    category: "Tecnologia Financeira",
-    description: "Solução de pagamentos segura com suporte a mobile money e cartões.",
-    results: ["$50M+ volume de transações", "99.95% SLA uptime", "Liquidação sub-segundo", "PCI-DSS conforme"],
-    gradient: "from-gray-800 to-gray-600",
-    tags: ["Microservices", "Kafka", "Go", "Kubernetes"],
-    year: "2023",
-  },
-  {
-    slug: "ai-analytics",
-    title: "Analytics com IA",
-    category: "Dados & IA",
-    description: "Plataforma de analytics preditivo em tempo real para inteligência de negócio.",
-    results: ["Automação de modelos ML", "Queries sub-segundo", "60% redução de custos", "Dashboards em 5 segundos"],
-    gradient: "from-blue-700 to-[#35A2F5]",
-    tags: ["Python", "TensorFlow", "Airflow", "BigQuery"],
-    year: "2023",
-  },
-];
+const caseGradients: Record<string, string> = {
+  "ajs-case-study": "from-[#03409C] to-[#35A2F5]",
+  "retail-erp": "from-cyan-700 to-sky-500",
+  "fintech-platform": "from-gray-800 to-gray-600",
+  "ai-analytics": "from-blue-700 to-[#35A2F5]",
+};
+
+const caseUrls: Record<string, string> = {
+  "ajs-case-study": "https://ajstl.com",
+};
 
 export default function Portfolio() {
   const { t } = useLanguage();
@@ -85,7 +51,7 @@ export default function Portfolio() {
               variants={fadeUp}
               className="text-xl text-gray-500 mt-6 leading-relaxed"
             >
-              Projectos reais, resultados mensuráveis. Da África ao Médio Oriente.
+              {t.portfolio.pageSubtitle}
             </motion.p>
           </motion.div>
         </div>
@@ -95,12 +61,7 @@ export default function Portfolio() {
       <section className="border-y border-gray-100 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { val: "50+", label: "Projetos entregues" },
-              { val: "15+", label: "Sectores servidos" },
-              { val: "3", label: "Continentes" },
-              { val: "95%", label: "Satisfação de clientes" },
-            ].map(({ val, label }) => (
+            {t.portfolio.metrics.map(({ val, label }) => (
               <div key={label} className="text-center">
                 <div className="text-3xl font-bold text-[#03409C]">{val}</div>
                 <p className="text-sm text-gray-500 mt-1">{label}</p>
@@ -120,13 +81,13 @@ export default function Portfolio() {
             viewport={{ once: true, margin: "-60px" }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {cases.map((project) => (
+            {t.portfolio.cases.map((project) => (
               <motion.article
                 key={project.slug}
                 variants={fadeUp}
                 className="group rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-2xl transition-all duration-400"
               >
-                <div className={`relative h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+                <div className={`relative h-56 bg-gradient-to-br ${caseGradients[project.slug]} overflow-hidden`}>
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
                   <div className="absolute inset-0 flex flex-col justify-between p-7">
                     <div className="flex items-center justify-between">
@@ -171,7 +132,7 @@ export default function Portfolio() {
 
                   <div className="mb-6">
                     <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">
-                      Resultados
+                      {t.portfolio.resultsLabel}
                     </h4>
                     <div className="grid grid-cols-2 gap-2">
                       {project.results.map((result) => (
@@ -195,21 +156,21 @@ export default function Portfolio() {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    {project.url && (
+                    {caseUrls[project.slug] && (
                       <a
-                        href={project.url}
+                        href={caseUrls[project.slug]}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#03409C] hover:text-[#35A2F5] transition-colors"
                       >
-                        Ver Website <ExternalLink size={13} />
+                        {t.portfolio.viewWebsite} <ExternalLink size={13} />
                       </a>
                     )}
                     <Link
                       to="/contactos"
                       className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#03409C] hover:gap-3 transition-all"
                     >
-                      Projecto semelhante <ArrowRight size={14} />
+                      {t.portfolio.similarProject} <ArrowRight size={14} />
                     </Link>
                   </div>
                 </div>
@@ -232,16 +193,16 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Quer um projecto semelhante?
+              {t.portfolio.ctaHeading}
             </h2>
             <p className="text-blue-100 mb-10 max-w-xl mx-auto">
-              Fale connosco e mostre-nos o seu desafio. Responderemos em 24h com um diagnóstico inicial.
+              {t.portfolio.ctaSubtitle}
             </p>
             <Link
               to="/contactos"
               className="inline-flex items-center gap-2 bg-white text-[#03409C] hover:bg-gray-50 font-bold px-8 py-4 rounded-full transition-colors duration-200"
             >
-              Iniciar conversa <ArrowRight size={18} />
+              {t.portfolio.ctaButton} <ArrowRight size={18} />
             </Link>
           </motion.div>
         </div>
