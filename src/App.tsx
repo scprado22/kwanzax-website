@@ -8,6 +8,7 @@ import Services from "@/pages/Services";
 import Flow from "@/pages/Flow";
 import Portfolio from "@/pages/Portfolio";
 import Contact from "@/pages/Contact";
+import About from "@/pages/About";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="/fluxo" element={<Flow />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contactos" element={<Contact />} />
+              <Route path="/sobre-nos" element={<About />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             </Routes>
           </main>

@@ -22,6 +22,7 @@ export function Header() {
     { label: t.nav.services, path: "/servicos" },
     { label: t.nav.flow, path: "/fluxo" },
     { label: t.nav.portfolio, path: "/portfolio" },
+    { label: t.nav.about, path: "/sobre-nos" },
     { label: t.nav.contact, path: "/contactos" },
   ];
 
