@@ -23,7 +23,8 @@ const team = [
       pt: "Visão estratégica e liderança de produto. Da ideia à execução, garantindo que cada projeto entrega valor real.",
       en: "Strategic vision and product leadership. From idea to execution, ensuring every project delivers real value.",
     },
-    linkedin: "https://www.linkedin.com/in/serafimcorreia/",
+    linkedin: "https://www.linkedin.com/in/serafim-correia-do-prado-831658338/",
+    photo: "/WhatsApp_Image_2026-04-09_at_19.55.19.jpeg",
     initials: "SC",
     color: "bg-[#03409C]",
   },
@@ -34,7 +35,8 @@ const team = [
       pt: "Rigor financeiro e excelência operacional. Assegura que cada decisão tem fundamento sólido e cada projeto é sustentável.",
       en: "Financial rigour and operational excellence. Ensures every decision has a solid foundation and every project is sustainable.",
     },
-    linkedin: null,
+    linkedin: "https://www.linkedin.com/in/jos%C3%A9-salvador-a76197224/",
+    photo: "/WhatsApp_Image_2026-04-09_at_17.28.39.jpeg",
     initials: "JS",
     color: "bg-[#35A2F5]",
   },
@@ -45,7 +47,8 @@ const team = [
       pt: "Análise estratégica e inteligência de mercado. Transforma dados em insights que nos mantêm sempre um passo à frente.",
       en: "Strategic analysis and market intelligence. Transforms data into insights that keep us always one step ahead.",
     },
-    linkedin: null,
+    linkedin: "https://www.linkedin.com/in/weza-paulo-2ab3b0233/",
+    photo: "/WhatsApp_Image_2026-04-09_at_18.55.14.jpeg",
     initials: "WP",
     color: "bg-cyan-600",
   },
@@ -56,7 +59,8 @@ const team = [
       pt: "Ponte entre negócio e tecnologia. Garante que cada solução resolve problemas reais e gera resultados mensuráveis.",
       en: "Bridge between business and technology. Ensures every solution solves real problems and generates measurable results.",
     },
-    linkedin: null,
+    linkedin: "https://www.linkedin.com/in/rita-da-silva-055828258/",
+    photo: "/WhatsApp_Image_2026-04-09_at_17.10.19.jpeg",
     initials: "RS",
     color: "bg-sky-600",
   },
@@ -132,9 +136,11 @@ export default function About() {
                   <p key={i} className="text-gray-600 leading-relaxed">{p}</p>
                 ))}
                 <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
-                  <div className="h-10 w-10 rounded-full bg-[#03409C] flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
-                    SC
-                  </div>
+                  <img
+                    src="/WhatsApp_Image_2026-04-09_at_19.55.19.jpeg"
+                    alt="Serafim Correia"
+                    className="h-10 w-10 rounded-full object-cover object-top flex-shrink-0"
+                  />
                   <div>
                     <p className="text-sm font-bold text-gray-900">Serafim Correia</p>
                     <p className="text-xs text-gray-500">Founder, KwanzaX</p>
@@ -173,33 +179,35 @@ export default function About() {
                 <motion.div
                   key={member.name}
                   variants={fadeUp}
-                  className="group rounded-2xl border border-gray-100 bg-white hover:border-[#35A2F5]/40 hover:shadow-lg transition-all duration-300 overflow-hidden"
+                  className="group rounded-2xl border border-gray-100 bg-white hover:border-[#35A2F5]/40 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
                 >
-                  <div className={`${member.color} h-2 w-full`} />
-                  <div className="p-7">
-                    <div className={`h-16 w-16 rounded-2xl ${member.color} flex items-center justify-center text-white text-xl font-bold mb-5`}>
-                      {member.initials}
-                    </div>
+                  <div className="relative h-56 w-full overflow-hidden bg-gray-100">
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      className="h-full w-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 ${member.color}`} />
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
                     <h3 className="text-base font-bold text-gray-900 leading-tight">
                       {member.name}
                     </h3>
-                    <p className="text-xs font-semibold text-[#35A2F5] mt-1 mb-4">
+                    <p className="text-xs font-semibold text-[#35A2F5] mt-1 mb-3">
                       {member.role[language as "pt" | "en"]}
                     </p>
-                    <p className="text-sm text-gray-500 leading-relaxed">
+                    <p className="text-sm text-gray-500 leading-relaxed flex-1">
                       {member.bio[language as "pt" | "en"]}
                     </p>
-                    {member.linkedin && (
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-[#03409C] hover:text-[#35A2F5] transition-colors"
-                      >
-                        <Linkedin size={14} />
-                        LinkedIn
-                      </a>
-                    )}
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-[#03409C] hover:text-[#35A2F5] transition-colors"
+                    >
+                      <Linkedin size={14} />
+                      LinkedIn
+                    </a>
                   </div>
                 </motion.div>
               ))}
