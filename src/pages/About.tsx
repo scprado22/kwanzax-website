@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/LanguageContext";
-import { ArrowRight, Linkedin, Zap, TrendingUp, Eye, Target, CircleCheck as CheckCircle } from "lucide-react";
+import { ArrowRight, Linkedin, Zap, TrendingUp, Eye, Target, Rocket, Users, Settings2, ShieldCheck } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -258,41 +258,75 @@ export default function About() {
         </div>
       </section>
 
-      {/* PORQUÊ CONFIAR */}
+      {/* PORQUE TRABALHAR COM A KWANZAX */}
       <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-60px" }}
           >
-            <motion.div variants={fadeUp} className="mb-3">
+            <motion.div variants={fadeUp} className="mb-12">
               <span className="text-xs font-semibold text-[#35A2F5] uppercase tracking-widest">
                 04
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3">
-                {a.trustTitle}
+                {language === "pt" ? "Porque trabalhar com a KwanzaX" : "Why work with KwanzaX"}
               </h2>
-              <p className="text-gray-500 mt-3">{a.trustIntro}</p>
+              <p className="text-gray-500 mt-3 max-w-xl">
+                {language === "pt"
+                  ? "Equipa próxima, execução rápida e foco em soluções que geram impacto real."
+                  : "Close team, fast execution and focus on solutions that generate real impact."}
+              </p>
             </motion.div>
 
-            <motion.div variants={stagger} className="mt-10 space-y-4">
-              {a.trustPoints.map((point) => (
-                <motion.div
-                  key={point.title}
-                  variants={fadeUp}
-                  className="flex items-start gap-5 p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:border-[#35A2F5]/40 transition-colors duration-200"
-                >
-                  <div className="flex-shrink-0 mt-0.5">
-                    <CheckCircle size={20} className="text-[#35A2F5]" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-gray-900">{point.title}</h3>
-                    <p className="text-sm text-gray-500 mt-1 leading-relaxed">{point.text}</p>
-                  </div>
-                </motion.div>
-              ))}
+            <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  icon: Rocket,
+                  title: language === "pt" ? "Execução rápida" : "Fast execution",
+                  text: language === "pt"
+                    ? "Projetos com estrutura clara, comunicação direta e foco em entrega."
+                    : "Projects with clear structure, direct communication and delivery focus.",
+                },
+                {
+                  icon: Users,
+                  title: language === "pt" ? "Proximidade" : "Proximity",
+                  text: language === "pt"
+                    ? "Trabalhamos de forma próxima com cada cliente, sem camadas desnecessárias."
+                    : "We work closely with each client, without unnecessary layers.",
+                },
+                {
+                  icon: Settings2,
+                  title: language === "pt" ? "Soluções à medida" : "Tailored solutions",
+                  text: language === "pt"
+                    ? "Construímos tecnologia alinhada com a realidade e os objetivos do negócio."
+                    : "We build technology aligned with business reality and objectives.",
+                },
+                {
+                  icon: ShieldCheck,
+                  title: language === "pt" ? "Transparência" : "Transparency",
+                  text: language === "pt"
+                    ? "Escopo, prioridades e próximos passos sempre claros desde o início."
+                    : "Scope, priorities and next steps always clear from the start.",
+                },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <motion.div
+                    key={item.title}
+                    variants={fadeUp}
+                    className="p-7 rounded-2xl border border-gray-100 bg-gray-50 hover:border-[#35A2F5]/40 hover:shadow-md transition-all duration-300"
+                  >
+                    <div className="h-11 w-11 rounded-xl bg-blue-50 flex items-center justify-center mb-5">
+                      <Icon size={22} className="text-[#03409C]" />
+                    </div>
+                    <h3 className="text-base font-bold text-gray-900 mb-2">{item.title}</h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">{item.text}</p>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </div>
