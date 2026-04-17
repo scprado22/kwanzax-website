@@ -26,11 +26,18 @@ const stagger = {
 
 const trustIcons = [Globe, TrendingUp, ShieldCheck, CheckCircle2];
 
-const portfolioGradients = [
-  "from-[#03409C] to-[#35A2F5]",
-  "from-cyan-600 to-sky-400",
-  "from-blue-700 to-[#35A2F5]",
-];
+const portfolioGradients: Record<string, string> = {
+  "ajs-case-study": "from-[#03409C] to-[#35A2F5]",
+  "billing-automation": "from-cyan-700 to-sky-500",
+  "retail-management": "from-gray-700 to-gray-500",
+  "kwanzax-website": "from-blue-700 to-[#35A2F5]",
+};
+
+const portfolioTypeBadge: Record<string, string> = {
+  real: "bg-emerald-500/20 text-emerald-700 border-emerald-300",
+  illustrative: "bg-amber-500/15 text-amber-700 border-amber-300",
+  internal: "bg-gray-200 text-gray-600 border-gray-300",
+};
 
 export default function Home() {
   const { t } = useLanguage();
@@ -264,31 +271,43 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {t.home.portfolioPreview.map((p, idx) => (
-                <motion.div
-                  key={p.title}
-                  variants={fadeUp}
-                  className="group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:shadow-xl transition-all duration-300"
-                >
-                  <div className={`h-48 bg-gradient-to-br ${portfolioGradients[idx]} relative`}>
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
-                    <span className="absolute top-4 left-4 text-xs font-semibold text-white/90 bg-white/10 border border-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                      {p.category}
-                    </span>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-base font-bold text-gray-900">{p.title}</h3>
-                    <p className="text-sm text-[#35A2F5] font-semibold mt-2">{p.result}</p>
-                    <Link
-                      to="/portfolio"
-                      className="inline-flex items-center gap-1 mt-4 text-sm text-gray-500 hover:text-[#03409C] transition-colors font-medium"
-                    >
-                      {t.home.portfolioItemViewCase} <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
+            <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {t.home.portfolioPreview.map((p) => {
+                const gradient = portfolioGradients[p.slug] ?? "from-[#03409C] to-[#35A2F5]";
+                const badgeStyle = portfolioTypeBadge[p.type] ?? portfolioTypeBadge.internal;
+                const typeLabel = t.portfolio.caseTypeLabel[p.type as keyof typeof t.portfolio.caseTypeLabel];
+                return (
+                  <motion.div
+                    key={p.slug}
+                    variants={fadeUp}
+                    className="group rounded-2xl overflow-hidden bg-white border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className={`h-44 bg-gradient-to-br ${gradient} relative`}>
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                      <div className="absolute inset-0 flex flex-col justify-between p-5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-semibold text-white/90 bg-white/10 border border-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                            {p.category}
+                          </span>
+                          <span className={`text-xs font-medium border px-2.5 py-1 rounded-full backdrop-blur-sm ${badgeStyle}`}>
+                            {typeLabel}
+                          </span>
+                        </div>
+                        <h3 className="text-xl font-bold text-white leading-tight">{p.title}</h3>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-sm text-gray-500 leading-relaxed">{p.summary}</p>
+                      <Link
+                        to="/portfolio"
+                        className="inline-flex items-center gap-1 mt-4 text-sm text-gray-500 hover:text-[#03409C] transition-colors font-medium"
+                      >
+                        {t.home.portfolioItemViewCase} <ArrowRight size={14} />
+                      </Link>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </div>
